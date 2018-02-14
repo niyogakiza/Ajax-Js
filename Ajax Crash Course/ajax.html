@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Ajax 1</title>
+</head>
+<body>
+<h1>Here I am!</h1>
+<button id="button">Get Text file</button>
+<br/>
+<div id="text">Sample Text</div>
+
+
+
+
+
+<script>
+    //Create event listener.
+    document.getElementById('button').addEventListener('click', loadText);
+    function loadText() {
+        // Create XHR object
+       //console.log('button clicked');
+        var xhr = new XMLHttpRequest();
+        //OPEN - type, url/file, async
+        //console.log(xhr);
+        xhr.open('GET', 'sample.txt', true);
+
+        //OPTIONAL - used for loaders
+        /*
+        xhr.onprogress = function(){
+            console.log('READYSTATE: ',xhr.readyState);
+        };*/
+
+        // Catch errors.
+        xhr.onerror = function (ev) {
+            console.log('Request Error....');
+        };
+
+        //console.log('READYSTATE: ',xhr.readyState);
+        xhr.onload = function (ev){
+            if(this.status === 200 ){
+                //console.log(this.responseText);
+                document.getElementById('text').innerHTML = this.responseText;
+            }else if(this.status === 404){
+                document.getElementById('text').innerHTML = 'Not Found!';
+            }
+        }
+
+
+
+
+        xhr.onreadystatechange = function (ev) {
+            //console.log('READYSTATE: ',xhr.readyState);
+            if(this.readyState === 4 && this.status === 200){
+                //console.log(this.responseText);
+            }
+        };
+        //Sends request
+        xhr.send();
+    }
+
+    /* readyState Values.
+    * 0: request not initialized,
+    * 1: server connection established,
+    * 2: request received,
+    * 3: processing request
+    * 4: request finished and response is ready
+    * */
+/*HTTP Statues,
+* 200: "OK",
+* 403: "Forbidden",
+* 404: "Not Found",
+* */
+
+
+
+</script>
+</body>
+</html>
